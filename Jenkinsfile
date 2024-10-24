@@ -31,8 +31,8 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 echo 'Running Terraform Plan...'
-                // Plan the Terraform deployment and output it to tfplan file
-                sh 'terraform plan -out=tfplan'
+                // Plan the Terraform deployment
+                sh 'terraform plan'
             }
         }
 
@@ -40,7 +40,15 @@ pipeline {
             steps {
                 echo 'Applying Terraform changes...'
                 // Apply the Terraform plan created in the previous step
-                sh 'terraform apply -auto-approve tfplan'
+                sh 'terraform apply -auto-approve'
+            }
+        }
+
+        stage('Terraform Destroy') {
+            steps {
+                echo 'Destroying Terraform resources...'
+                // Destroy the resources created by Terraform
+                sh 'terraform destroy -auto-approve'
             }
         }
 
@@ -51,11 +59,11 @@ pipeline {
             }
         }
     }
-    
+
     post {
         always {
             echo 'Pipeline finished. Cleaning up workspace...'
-            // You can add cleanup steps or notifications here
+            // Clean up workspace after pipeline execution
         }
     }
 }
