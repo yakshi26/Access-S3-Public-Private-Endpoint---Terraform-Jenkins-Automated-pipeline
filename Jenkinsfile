@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
-        // Ensure this matches the correct Jenkins credential ID for GitHub
-        GIT_CREDENTIALS_ID = '619' // Update this if needed
+        GIT_CREDENTIALS_ID = '619'  // Your GitHub credentials
+        AWS_CREDENTIALS_ID = 'aws-credentials'  // AWS credentials in Jenkins
+        AWS_REGION = 'us-east-1'  // Your AWS region
     }
 
     stages {
@@ -11,7 +12,6 @@ pipeline {
             steps {
                 script {
                     echo 'Checking out code from GitHub...'
-                    // Checkout the GitHub repository using Jenkins Git credentials
                     checkout([$class: 'GitSCM', 
                               branches: [[name: '*/main']], 
                               userRemoteConfigs: [[url: 'https://github.com/sarathkumar0619/Access-S3-Public-Private-Endpoint---Terraform-Jenkins-Automated-pipeline.git', credentialsId: GIT_CREDENTIALS_ID]]
@@ -23,39 +23,42 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 echo 'Initializing Terraform...'
-                // Initialize Terraform - assumes terraform is already installed on Jenkins agent
-                sh 'terraform init'
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: AWS_CREDENTIALS_ID]]) {
+                    sh 'terraform init'
+                }
             }
         }
 
         stage('Terraform Plan') {
             steps {
                 echo 'Running Terraform Plan...'
-                // Plan the Terraform deployment
-                sh 'terraform plan'
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: AWS_CREDENTIALS_ID]]) {
+                    sh 'terraform plan'
+                }
             }
         }
 
         stage('Terraform Apply') {
             steps {
                 echo 'Applying Terraform changes...'
-                // Apply the Terraform plan created in the previous step
-                sh 'terraform apply -auto-approve'
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: AWS_CREDENTIALS_ID]]) {
+                    sh 'terraform apply'
+                }
             }
         }
 
         stage('Terraform Destroy') {
             steps {
                 echo 'Destroying Terraform resources...'
-                // Destroy the resources created by Terraform
-                sh 'terraform destroy -auto-approve'
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: AWS_CREDENTIALS_ID]]) {
+                    sh 'terraform destroy'
+                }
             }
         }
 
         stage('Cleanup') {
             steps {
                 echo 'Pipeline execution completed! Cleaning up...'
-                // Any cleanup tasks can be added here
             }
         }
     }
@@ -63,7 +66,6 @@ pipeline {
     post {
         always {
             echo 'Pipeline finished. Cleaning up workspace...'
-            // Clean up workspace after pipeline execution
         }
     }
 }
