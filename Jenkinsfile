@@ -42,7 +42,7 @@ pipeline {
             steps {
                 echo 'Applying Terraform changes...'
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: AWS_CREDENTIALS_ID]]) {
-                    sh 'terraform apply'
+                    sh 'terraform apply -auto-approve'
                 }
             }
         }
@@ -51,7 +51,7 @@ pipeline {
             steps {
                 echo 'Destroying Terraform resources...'
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: AWS_CREDENTIALS_ID]]) {
-                    sh 'terraform destroy'
+                    sh 'terraform destroy -auto-approve'
                 }
             }
         }
