@@ -1,47 +1,29 @@
 pipeline {
     agent any
 
-    environment {
-        AWS_CREDENTIALS_ID = 'aws-credentials'  // Replace this with your actual credentials ID
-        AWS_REGION = 'us-east-1'  // Your AWS region
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+            checkout scm
             }
         }
-
-        stage("Terraform Init") {
+        
+        stage ("terraform init") {
             steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: AWS_CREDENTIALS_ID]]) {
-                    sh 'terraform init -reconfigure'
-                }
+                sh ('terraform init -reconfigure') 
             }
         }
-
-        stage("Terraform Plan") {
+        stage ("terraform plan") {
             steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: AWS_CREDENTIALS_ID]]) {
-                    sh 'terraform plan'
-                }
+                sh ('terraform plan') 
             }
         }
-
-        stage("Terraform Action") {
+                
+        stage ("terraform Action") {
             steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: AWS_CREDENTIALS_ID]]) {
-                    echo "Terraform action is --> ${action}"
-                    sh "terraform ${action} --auto-approve"
-                }
-            }
-        }
-    }
-
-    post {
-        always {
-            echo 'Pipeline finished. Cleaning up workspace...'
+                echo "Terraform action is --> ${action}"
+                sh ('terraform ${action} --auto-approve') 
+           }
         }
     }
 }
