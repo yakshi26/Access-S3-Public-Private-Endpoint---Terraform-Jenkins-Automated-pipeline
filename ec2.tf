@@ -1,3 +1,4 @@
+
 # Bastion EC2 in Public Subnet
 resource "aws_instance" "bastion" {
   ami           = var.ami
