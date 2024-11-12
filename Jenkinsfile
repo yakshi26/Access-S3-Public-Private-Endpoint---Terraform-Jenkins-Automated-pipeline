@@ -63,7 +63,8 @@ pipeline {
                 script {
                     if (params.action == 'apply') {
                         sh 'terraform apply --auto-approve '  // Uses saved plan for apply
-                    } //else if (params.action == 'plan') {
+                    } 
+                   else if (params.action == 'plan') {
                         sh 'terraform plan'
                     } else {
                         error "Invalid action: ${params.action}. Only 'plan' or 'apply' are allowed."
