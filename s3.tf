@@ -1,4 +1,4 @@
 resource "aws_s3_bucket" "my_bucket" {
-  bucket = "shankar90143"
+  bucket = var.s3_bucket_name
   # Remove acl from here
 }
