@@ -1,4 +1,4 @@
 resource "aws_s3_bucket" "my_bucket" {
-  bucket = var.s3_bucket_name
+  bucket = "aws-devops"
   # Remove acl from here
 }
