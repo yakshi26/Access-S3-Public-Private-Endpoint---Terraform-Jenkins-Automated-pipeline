@@ -10,6 +10,6 @@ website {
 resource "aws_s3_bucket_object" "index_html" {
   bucket = aws_s3_bucket.static_website.bucket
   key    = "index.html"
-  source = "index.html"  # Local file to upload to S3
+  source = "D:\html\portfolio\personal-portfolio-img\index.html"  # Local file to upload to S3
   acl    = "public-read"
 }
