@@ -32,7 +32,7 @@ variable "availability_zone" {
 
 variable "s3_bucket_name" {
   description = "S3 Bucket Name"
-  default     = "my-static-s3-bucket"
+  default     = "my-static-s3-bucket-3001"
 }
 
 variable "region" {
