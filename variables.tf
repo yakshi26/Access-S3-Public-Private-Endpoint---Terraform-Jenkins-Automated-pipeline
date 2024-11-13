@@ -22,7 +22,7 @@ variable "ami" {
 
 variable "instance_type" {
   description = "EC2 instance type"
-  default     = "t2.micro"
+  default     = "t2.large"
 }
 
 variable "availability_zone" {
@@ -32,7 +32,7 @@ variable "availability_zone" {
 
 variable "s3_bucket_name" {
   description = "S3 Bucket Name"
-  default     = "my-bucket-unique-name"
+  default     = "my-bucket123"
 }
 
 variable "region" {
