@@ -19,3 +19,7 @@ output "s3_bucket_name" {
   value = aws_s3_bucket.my_bucket.bucket
   description = "S3 Bucket Name"
 }
+
+output "static_website_url" {
+  value = aws_s3_bucket.static_website.website_endpoint
+}
