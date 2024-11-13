@@ -45,7 +45,7 @@ resource "aws_iam_role_policy_attachment" "ec2_s3_access" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }
 
-resource "aws_iam_instance_profile" "existing_ec2_profile" {
-  name = "ec2_profile"
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name = "ec2_profile_new"
   role = aws_iam_role.ec2_role.name
 }
