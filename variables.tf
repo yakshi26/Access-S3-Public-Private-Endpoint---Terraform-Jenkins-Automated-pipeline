@@ -27,7 +27,7 @@ variable "instance_type" {
 
 variable "availability_zone" {
   description = "Availability Zone for subnets"
-  default     = "ap-south-1"  # Adjust based on your region
+  default     = "ap-south-1a"  # Adjust based on your region
 }
 
 variable "s3_bucket_name" {
