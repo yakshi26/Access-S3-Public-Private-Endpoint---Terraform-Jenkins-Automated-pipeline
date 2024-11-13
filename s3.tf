@@ -7,7 +7,7 @@ resource "aws_s3_bucket" "my_bucket" {
   }
 }
 
-resource "aws_s3_bucket_object" "index_html" {
+resource "aws_s3_object" "index_html" {
   bucket = aws_s3_bucket.my_bucket.bucket  # Reference the correct bucket
   key    = "index.html"
   source = "D:/html/portfolio/personal-portfolio-img/index.html"  # Ensure the correct file path for your local machine
